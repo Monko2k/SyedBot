@@ -55,6 +55,8 @@ func MessageHandler(s *discordgo.Session, m *discordgo.MessageCreate) {
 	switch(cmd) {
 		case "github":
 			s.ChannelMessageSend(m.ChannelID, "https://github.com/Monko2k/SyedBot")
+		case "ticks":
+			s.ChannelMessageSend(m.ChannelID, "https://monko2k.xyz/")
 		case "time": 
 			go commands.Time(s, m, arg)
 		case "timein":
