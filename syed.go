@@ -46,9 +46,10 @@ func main() {
 	}
 	clientOpts := options.Client().ApplyURI(config.Config.MongoDB.Hostname).SetAuth(mongoAuth)
 	utilities.Database, err = mongo.Connect(ctx, clientOpts)
-	log.Println("Database connected")
 	if err != nil {
 		log.Println("Database failed to connect:", err)
+	} else {
+		log.Println("Database connected")
 	}
 
 	defer func() {
