@@ -65,7 +65,9 @@ func Tick(s *discordgo.Session, m *discordgo.MessageCreate, arg string) {
 
 	if err != nil {
 		log.Println(err)
+		return
 	}
+	s.ChannelMessageSend(m.ChannelID, "done lol")
 }
 
 func SetNick(s *discordgo.Session, m *discordgo.MessageCreate, arg string) {
@@ -97,6 +99,7 @@ func SetNick(s *discordgo.Session, m *discordgo.MessageCreate, arg string) {
 	)
 	if err != nil {
 		log.Println(err)
+		return
 	}
 	collection = utilities.Database.Database("SyedBot").Collection("quotes")
 	_, err = collection.UpdateMany(ctx, 
@@ -108,7 +111,9 @@ func SetNick(s *discordgo.Session, m *discordgo.MessageCreate, arg string) {
 
 	if err != nil {
 		log.Println(err)
+		return
 	}
+	s.ChannelMessageSend(m.ChannelID, "done lol")
 
 }
 
