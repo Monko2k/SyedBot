@@ -124,18 +124,30 @@ func PingVoice(s *discordgo.Session, m *discordgo.MessageCreate, arg string) {
 		return
 	}
 
+	users := ""
+	var voicech Channel
+
+	//find the first voice channel with matching name
 	for _, c := range guild.Channels {
 		if c.Type == discordgo.ChannelTypeGuildVoice && vsearch.MatchString(c.Name) {
-			users := ""
+			voicech = c
 			for _, vs := range guild.VoiceStates {
-				if vs.ChannelID == c.ID {
+				if vs.ChannelID == voicech.ID {
 					users += "<@" + vs.UserID + "> "
 				}
 			}
+			//keep trying if no users are found
 			if len(users) != 0 {
-				s.ChannelMessageSend(m.ChannelID, "<@"+m.Author.ID+"> "+users)
-				return
+				break
 			}
 		}
+	}
+
+	if voicech == nil {
+		s.ChannelMessageSend(m.ChannelID, "No voice channels found with the name " +arg)
+	} else if len(users) == 0 {
+		s.ChannelMessageSend(m.ChannelID, "No users found in " + voicech.Name)
+	} else {
+		s.ChannelMessageSend(m.ChannelID, "<@"+m.Author.ID+"> "+users)
 	}
 }
